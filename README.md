@@ -1,2 +1,2 @@
 # Weather
-Simple Android Wether application (on development stage).
+Simple Android Weather application (on development stage).
