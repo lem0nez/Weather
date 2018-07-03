@@ -17,14 +17,38 @@
 
 package com.a95gmail.dudko.nikita.weather;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+
+import static com.a95gmail.dudko.nikita.weather.data.Preferences.DEFAULT_PREF_CITY_ID;
+import static com.a95gmail.dudko.nikita.weather.data.Preferences.PREF_CITY_ID;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "Weather";
+
+    private Toolbar mToolbar;
+    private SharedPreferences mPreferences;
+    private int mCityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mToolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(mToolbar);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mCityId = mPreferences.getInt(PREF_CITY_ID, DEFAULT_PREF_CITY_ID);
+
+        if (mCityId == DEFAULT_PREF_CITY_ID) {
+            startActivity(new Intent(this, StartActivity.class));
+            finish();
+        }
     }
 }

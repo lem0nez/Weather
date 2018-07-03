@@ -17,7 +17,11 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="color_primary">#FAFAFA</color>
+    <color name="color_primary_dark">#F5F5F5</color>
+    <color name="color_accent">#2196F3</color>
+    <color name="color_text">#212121</color>
+    <color name="color_button_start_activity">#55000000</color>
+    <color name="color_gray">#BDBDBD</color>
+    <color name="color_red">#F44336</color>
 </resources>
