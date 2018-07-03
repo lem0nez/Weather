@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2018 Nikita Dudko. All rights reserved.
+  ~ Contacts: <nikita.dudko.95@gmail.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity"
+    android:background="@drawable/background_activity_start"
+    android:theme="@style/StartActivityTheme"
+    android:paddingTop="@dimen/layout_padding"
+    android:paddingBottom="@dimen/layout_padding"
+    android:paddingRight="@dimen/layout_padding"
+    android:paddingLeft="@dimen/layout_padding">
+
+    <TextView
+        android:id="@+id/text_view_app_name_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/app_name"
+        android:textSize="@dimen/app_name_header_text_size" />
+
+    <TextView
+        android:id="@+id/text_view_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_app_name_header"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/select_locate_variant"
+        android:textAlignment="center"
+        android:textColor="@color/color_gray"
+        android:textSize="@dimen/action_text_size" />
+
+    <Button
+        android:id="@+id/button_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_app_name_header"
+        app:layout_constraintBottom_toTopOf="@id/button_enter_city"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:paddingRight="@dimen/button_padding"
+        android:paddingLeft="@dimen/button_padding"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:text="@string/locate"
+        android:background="@color/color_button_start_activity" />
+
+    <Button
+        android:id="@+id/button_enter_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/button_locate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingRight="@dimen/button_padding"
+        android:paddingLeft="@dimen/button_padding"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/enter_city"
+        android:background="@color/color_button_start_activity" />
+
+    <TextView
+        android:id="@+id/text_view_weather_provider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
+        android:text="@string/weather_provider"
+        android:textColor="@color/color_gray"
+        android:textSize="@dimen/weather_provider_text_size" />
+
+</android.support.constraint.ConstraintLayout>
