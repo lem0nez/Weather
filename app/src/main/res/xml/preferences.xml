@@ -17,9 +17,12 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
-        android:key="city"
-        android:defaultValue="Minsk"
+    <Preference
+        android:key="city_id"
         android:title="@string/title_pref_city"
         android:summary="@string/summary_city" />
+    <Preference
+        android:key="locate"
+        android:title="@string/locate"
+        android:summary="@string/summary_locate" />
 </PreferenceScreen>

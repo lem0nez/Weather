@@ -17,7 +17,6 @@
   -->
 
 <resources>
-    <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="app_name_header_text_size">48sp</dimen>
     <dimen name="action_text_size">14sp</dimen>
     <dimen name="weather_provider_text_size">12sp</dimen>

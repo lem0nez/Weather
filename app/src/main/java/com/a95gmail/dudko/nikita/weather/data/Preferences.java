@@ -19,5 +19,6 @@ package com.a95gmail.dudko.nikita.weather.data;
 
 public final class Preferences {
     public static final String PREF_CITY_ID = "city_id";
+    public static final String PREF_LOCATE = "locate";
     public static final int DEFAULT_PREF_CITY_ID = -1;
 }

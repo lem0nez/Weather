@@ -21,23 +21,28 @@
     <string name="title_week">Week</string>
     <string name="title_settings">Settings</string>
     <string name="locate">Locate</string>
-    <string name="enter_city">Enter city</string>
+    <string name="enter_city">Enter the city</string>
     <string name="select_locate_variant">Select way for identify your location</string>
     <string name="loading">Loading...</string>
     <string name="loading_locate">Definition of your city. Please, wait...</string>
     <string name="action_need_location_permission">Need location permission for getting your city name
-        (or, you can enter city name manually)</string>
+        (or, you can enter the city manually)</string>
     <string name="title_error">Error</string>
     <string name="error_fail_locate">An error occurred while determining your location.
         Try later or enter city manually</string>
     <string name="title_pref_city">City</string>
-    <string name="summary_city">Your city name</string>
-    <string name="enter_city_hint">Enter city name</string>
+    <string name="summary_city">Change your location</string>
+    <string name="enter_city_hint">Enter the city</string>
     <string name="city_not_found">City not found</string>
     <string name="location">Your location</string>
     <string name="checking">Checking...</string>
     <string name="error">Error</string>
-    <string name="need_city_name">Need city name</string>
-    <string name="need_network_access">Need network access</string>
+    <string name="need_city_name">Need the city name</string>
+    <string name="need_network_access">Need the network access</string>
     <string name="weather_provider">provided by OpenWeatherMap</string>
+    <string name="summary_locate">Automatically determine the city</string>
+    <string name="need_location_permission">
+        Need location permission for automatically determining your city name</string>
+    <string name="error_while_locate">Error occurred while determining your location</string>
+    <string name="city_determined">City successful determined</string>
 </resources>

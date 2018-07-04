@@ -17,12 +17,13 @@
 
 package com.a95gmail.dudko.nikita.weather;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import static com.a95gmail.dudko.nikita.weather.data.Preferences.DEFAULT_PREF_CITY_ID;
 import static com.a95gmail.dudko.nikita.weather.data.Preferences.PREF_CITY_ID;
@@ -30,7 +31,6 @@ import static com.a95gmail.dudko.nikita.weather.data.Preferences.PREF_CITY_ID;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Weather";
 
-    private Toolbar mToolbar;
     private SharedPreferences mPreferences;
     private int mCityId;
 
@@ -39,8 +39,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(mToolbar);
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_main);
+        navigationView.setOnNavigationItemSelectedListener((item) -> {
+            switch (item.getItemId()) {
+                case R.id.menu_settings :
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.layout_main, new PreferencesFragment());
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fragmentTransaction.commit();
+                default :
+                    return true;
+            }
+        });
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);

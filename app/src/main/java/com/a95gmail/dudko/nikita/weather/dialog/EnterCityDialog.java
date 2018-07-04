@@ -104,8 +104,7 @@ public class EnterCityDialog extends DialogFragment {
                     summary.setText(R.string.need_network_access);
                     return;
                 } else if (city.isEmpty()) {
-                    summary.setVisibility(View.GONE);
-                    return;
+                    dismiss();
                 }
 
                 summary.setTextColor(getActivity().getColor(R.color.color_text));
