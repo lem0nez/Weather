@@ -22,6 +22,7 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:textColor">@color/color_text</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
+        <item name="cardViewStyle">@style/CardViewStyle</item>
     </style>
 
     <style name="ButtonColor" parent="Widget.AppCompat.Button">
@@ -39,4 +40,8 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="CardViewStyle" parent="CardView">
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
 </resources>

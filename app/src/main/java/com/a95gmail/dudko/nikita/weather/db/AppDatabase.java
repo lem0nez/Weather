@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-package com.a95gmail.dudko.nikita.weather.data;
+package com.a95gmail.dudko.nikita.weather.db;
 
-public final class Preferences {
-    public static final String PREF_CITY_ID = "city_id";
-    public static final String PREF_LOCATE = "locate";
-    public static final int DEFAULT_PREF_CITY_ID = -1;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.RoomDatabase;
+
+import com.a95gmail.dudko.nikita.weather.db.dao.WeatherDao;
+import com.a95gmail.dudko.nikita.weather.db.entitie.Weather;
+
+@Database(entities = Weather.class, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
+    public static final String DB_NAME = "database";
+
+    public abstract WeatherDao getWeatherDao();
 }

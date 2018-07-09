@@ -24,4 +24,6 @@
     <color name="color_button_start_activity">#55000000</color>
     <color name="color_gray">#BDBDBD</color>
     <color name="color_red">#F44336</color>
+    <color name="color_title_pressure_humidity">#424242</color>
+    <color name="color_max_min_temp_title">#424242</color>
 </resources>

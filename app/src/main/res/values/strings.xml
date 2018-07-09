@@ -18,7 +18,7 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="title_today">Today</string>
-    <string name="title_week">Week</string>
+    <string name="title_five_days">5 days</string>
     <string name="title_settings">Settings</string>
     <string name="locate">Locate</string>
     <string name="enter_city">Enter the city</string>
@@ -45,4 +45,16 @@
         Need location permission for automatically determining your city name</string>
     <string name="error_while_locate">Error occurred while determining your location</string>
     <string name="city_determined">City successful determined</string>
+    <string name="compass_n">N</string>
+    <string name="compass_s">S</string>
+    <string name="compass_e">E</string>
+    <string name="compass_w">W</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="temperature_max">Maximum temperature</string>
+    <string name="temperature_min">Minimum temperature</string>
+    <string name="unit_mmhg">mm Hg</string>
+    <string name="unit_celsius">°C</string>
+    <string name="unit_meters_per_second">m/s</string>
+    <string name="need_network_for_update">Need network connection for update weather data</string>
 </resources>

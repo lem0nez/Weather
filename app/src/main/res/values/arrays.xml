@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2018 Nikita Dudko. All rights reserved.
+  ~ Contacts: <nikita.dudko.95@gmail.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string-array name="weather_conditions">
+        <item>200|Thunderstorm with light rain</item>
+        <item>201|Thunderstorm with rain</item>
+        <item>202|Thunderstorm with heavy rain</item>
+        <item>210|Light thunderstorm</item>
+        <item>211|Thunderstorm</item>
+        <item>212|Heavy thunderstorm</item>
+        <item>221|Ragged thunderstorm</item>
+        <item>230|Thunderstorm with light drizzle</item>
+        <item>231|Thunderstorm with drizzle</item>
+        <item>232|Thunderstorm with heavy drizzle</item>
+        <item>300|Light intensity drizzle</item>
+        <item>301|Drizzle</item>
+        <item>302|Heavy intensity drizzle</item>
+        <item>310|Light intensity drizzle rain</item>
+        <item>311|Drizzle rain</item>
+        <item>312|Heavy intensity drizzle rain</item>
+        <item>313|Shower rain and drizzle</item>
+        <item>314|Heavy shower rain and drizzle</item>
+        <item>321|Shower drizzle</item>
+        <item>500|Light rain</item>
+        <item>501|Moderate rain</item>
+        <item>502|Heavy intensity rain</item>
+        <item>503|Very heavy rain</item>
+        <item>504|Extreme rain</item>
+        <item>511|Freezing rain</item>
+        <item>520|Light intensity shower rain</item>
+        <item>521|Shower rain</item>
+        <item>522|Heavy intensity shower rain</item>
+        <item>531|Ragged shower rain</item>
+        <item>600|Light snow</item>
+        <item>601|Snow</item>
+        <item>602|Heavy snow</item>
+        <item>611|Sleet</item>
+        <item>612|Shower sleet</item>
+        <item>615|Light rain and snow</item>
+        <item>616|Rain and snow</item>
+        <item>620|Light shower snow</item>
+        <item>621|Shower snow</item>
+        <item>622|Heavy shower snow</item>
+        <item>701|Mist</item>
+        <item>711|Smoke</item>
+        <item>721|Haze</item>
+        <item>731|Sand, dust whirls</item>
+        <item>741|Fog</item>
+        <item>751|Sand</item>
+        <item>761|Dust</item>
+        <item>762|Volcanic ash</item>
+        <item>771|Squalls</item>
+        <item>781|Tornado</item>
+        <item>800|Clear sky</item>
+        <item>801|Few clouds</item>
+        <item>802|Scattered clouds</item>
+        <item>803|Broken clouds</item>
+        <item>804|Overcast clouds</item>
+    </string-array>
+</resources>

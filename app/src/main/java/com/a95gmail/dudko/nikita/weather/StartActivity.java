@@ -33,7 +33,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.a95gmail.dudko.nikita.weather.data.Preferences;
 import com.a95gmail.dudko.nikita.weather.dialog.EnterCityDialog;
 import com.a95gmail.dudko.nikita.weather.dialog.ErrorDialog;
 import com.a95gmail.dudko.nikita.weather.dialog.LoadingDialog;

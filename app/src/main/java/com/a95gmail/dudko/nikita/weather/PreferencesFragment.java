@@ -32,7 +32,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.a95gmail.dudko.nikita.weather.data.Preferences;
 import com.a95gmail.dudko.nikita.weather.dialog.EnterCityDialog;
 import com.a95gmail.dudko.nikita.weather.dialog.LoadingDialog;
 
@@ -91,6 +90,7 @@ public class PreferencesFragment extends PreferenceFragment {
 
                     mLocationManager = (LocationManager)
                             getActivity().getSystemService(Context.LOCATION_SERVICE);
+                    //noinspection ConstantConditions
                     mLocationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER, 5000, 2000, locationListener);
 

@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.a95gmail.dudko.nikita.weather.MainActivity;
 import com.a95gmail.dudko.nikita.weather.R;
 import com.a95gmail.dudko.nikita.weather.WeatherProvider;
 
@@ -96,7 +98,13 @@ public class EnterCityDialog extends DialogFragment {
 
                 ConnectivityManager connectivityManager = (ConnectivityManager)
                         getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+                NetworkInfo netInfo = null;
+
+                try {
+                    netInfo = connectivityManager.getActiveNetworkInfo();
+                } catch (NullPointerException e) {
+                    Log.e(MainActivity.LOG_TAG, e.getMessage());
+                }
                 boolean isConnected = netInfo != null && netInfo.isConnectedOrConnecting();
 
                 if (!isConnected) {
@@ -105,6 +113,7 @@ public class EnterCityDialog extends DialogFragment {
                     return;
                 } else if (city.isEmpty()) {
                     dismiss();
+                    return;
                 }
 
                 summary.setTextColor(getActivity().getColor(R.color.color_text));

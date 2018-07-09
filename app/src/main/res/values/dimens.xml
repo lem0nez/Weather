@@ -16,7 +16,7 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="app_name_header_text_size">48sp</dimen>
     <dimen name="action_text_size">14sp</dimen>
     <dimen name="weather_provider_text_size">12sp</dimen>
@@ -24,4 +24,26 @@
     <dimen name="loading_margin">16dp</dimen>
     <dimen name="layout_padding">16dp</dimen>
     <dimen name="button_padding">12dp</dimen>
+    <dimen name="card_corner_radius">6dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="temperature_text_size">32sp</dimen>
+    <dimen name="compass_text_size">6sp</dimen>
+    <dimen name="compass_margin_top">4dp</dimen>
+    <dimen name="compass_margin_bottom">2dp</dimen>
+    <dimen name="wind_speed_text_size">18sp</dimen>
+    <dimen name="pressure_humidity_text_size">24sp</dimen>
+    <dimen name="pressure_humidity_title_text_size">12sp</dimen>
+    <dimen name="cloudiness_text_size">18sp</dimen>
+    <dimen name="weather_title_text_size">16sp</dimen>
+    <dimen name="max_min_title_temp_text_size">10sp</dimen>
+    <dimen name="max_min_temp_text_size">20sp</dimen>
+    <dimen name="sunrise_sunset_text_size">24sp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="weather_today_padding">8dp</dimen>
+
+    <!-- Increase max width of bottom navigation for tablets and landscape mode. -->
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
+
+    <dimen name="error_text_size">18sp</dimen>
 </resources>
