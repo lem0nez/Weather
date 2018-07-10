@@ -21,6 +21,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -51,6 +52,13 @@ public class PreferencesFragment extends PreferenceFragment {
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         initCustomPreferences();
+        updateUpdateIntervalSummary();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     @Override
@@ -59,7 +67,16 @@ public class PreferencesFragment extends PreferenceFragment {
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(locationListener);
         }
+        mPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
+
+    private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener =
+            (SharedPreferences sharedPreferences, String key) -> {
+        if (key.equals(Preferences.PREF_UPDATE_INTERVAL)) {
+            updateUpdateIntervalSummary();
+        }
+    };
+
 
     private void initCustomPreferences() {
         Preference cityPref = findPreference(Preferences.PREF_CITY_ID);
@@ -136,4 +153,21 @@ public class PreferencesFragment extends PreferenceFragment {
             Toast.makeText(getActivity(), R.string.error_while_locate, Toast.LENGTH_LONG).show();
         }
     };
+
+    private void updateUpdateIntervalSummary() {
+        Preference preference = findPreference(Preferences.PREF_UPDATE_INTERVAL);
+        String value = mPreferences
+                .getString(Preferences.PREF_UPDATE_INTERVAL, Preferences.DEFAULT_PREF_UPDATE_INTERVAL);
+        Resources resources = getActivity().getResources();
+
+        String[] entries = resources.getStringArray(R.array.update_interval_entries);
+        String[] entryValues = resources.getStringArray(R.array.update_interval_entry_values);
+
+        for (int i = 0; i != entries.length; ++i) {
+            if (value.equals(entryValues[i])) {
+                preference.setSummary(entries[i]);
+                break;
+            }
+        }
+    }
 }

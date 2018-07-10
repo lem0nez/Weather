@@ -38,12 +38,14 @@ import com.a95gmail.dudko.nikita.weather.db.dao.WeatherDao;
 import com.a95gmail.dudko.nikita.weather.db.entitie.Weather;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 
 import static com.a95gmail.dudko.nikita.weather.Preferences.DEFAULT_PREF_CITY_ID;
 import static com.a95gmail.dudko.nikita.weather.Preferences.PREF_CITY_ID;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "Weather";
+    private static final String KEY_SELECTED_ITEM_ID = "SELECTED_ITEM_ID";
     private static final long MILLIS_IN_DAY = 3600 * 24 * 1000;
 
     private Toolbar mToolbar;
@@ -69,12 +71,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, StartActivity.class));
             finish();
         }
+
+        if (savedInstanceState != null) {
+            addFragmentToLayout(savedInstanceState.getInt(KEY_SELECTED_ITEM_ID));
+        } else {
+            initWeatherToday();
+        }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        initWeatherToday();
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SELECTED_ITEM_ID, mBottomNavigation.getSelectedItemId());
+        super.onSaveInstanceState(outState);
     }
 
     private void initFields() {
@@ -90,32 +98,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBottomNavigation() {
         mBottomNavigation.setOnNavigationItemSelectedListener((item) -> {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            mMainLayout.removeAllViews();
-
-            switch (item.getItemId()) {
-                case R.id.menu_settings :
-                    fragmentTransaction.add(R.id.layout_main, new PreferencesFragment());
-                    fragmentTransaction.commit();
-                    return true;
-                case R.id.menu_today :
-                    if (mWeatherToday != null) {
-                        fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
-                        fragmentTransaction.commit();
-                    } else {
-                        initWeatherToday();
-                    }
-                    return true;
-                default :
-                    return true;
-            }
+            addFragmentToLayout(item.getItemId());
+            return true;
         });
     }
 
-    private void initWeatherToday() {
+    private void addFragmentToLayout(int itemId) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        mMainLayout.removeAllViews();
 
+        switch (itemId) {
+            case R.id.menu_settings :
+                mProgressBar.setVisibility(View.GONE);
+                fragmentTransaction.add(R.id.layout_main, new PreferencesFragment());
+                fragmentTransaction.commit();
+                break;
+            case R.id.menu_today :
+                initWeatherToday();
+                break;
+            default :
+                break;
+        }
+    }
+
+    private void initWeatherToday() {
         if (mWeatherToday != null) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
             fragmentTransaction.commit();
             return;
@@ -123,6 +131,27 @@ public class MainActivity extends AppCompatActivity {
 
         mProgressBar.setVisibility(View.VISIBLE);
 
+        long lastUpdateTime = mPreferences.getLong(Preferences.PREF_LAST_UPDATE, 0);
+        long needForUpdateTime = lastUpdateTime
+                + Long.valueOf(mPreferences.getString(Preferences.PREF_UPDATE_INTERVAL, ""));
+        long currentTimestampMillis = System.currentTimeMillis();
+
+        if (currentTimestampMillis / 1000 < needForUpdateTime) {
+            WeatherProvider weatherProvider = new WeatherProvider(this);
+            weatherProvider.requestRelevantWeathersOnDay(currentTimestampMillis, 1, weathers -> {
+                if (weathers.size() != 0) {
+                    runOnUiThread(() -> displayWeatherUsingLocalData(weathers));
+                } else {
+                    loadAndDisplayWeatherToday();
+                }
+            });
+        } else {
+            loadAndDisplayWeatherToday();
+        }
+    }
+
+    private void loadAndDisplayWeatherToday() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
@@ -145,6 +174,10 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                SharedPreferences.Editor prefEditor = mPreferences.edit();
+                prefEditor.putLong(Preferences.PREF_LAST_UPDATE, System.currentTimeMillis() / 1000);
+                prefEditor.commit();
+
                 mWeatherToday = weather;
                 fragmentTransaction.add(R.id.layout_main, new TodayFragment(weather));
                 fragmentTransaction.commit();
@@ -162,28 +195,35 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 new Thread(() -> mWeatherDao.insert(weather)).start();
                             }
-                });
+                        });
             });
         } else {
             displayWeatherUsingDatabaseData();
         }
     }
 
+    private void displayWeatherUsingLocalData(List<Weather> weathers) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        mWeatherToday = weathers.get(0);
+        fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
+        fragmentTransaction.commit();
+        mProgressBar.setVisibility(View.GONE);
+    }
+
     private void displayWeatherUsingDatabaseData() {
         WeatherProvider weatherProvider = new WeatherProvider(this);
-
         weatherProvider.requestRelevantWeathersOnDay(System.currentTimeMillis(), 1, weathers -> {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-                if (weathers.size() == 0) {
-                    fragmentTransaction.add(R.id.layout_main, new ErrorFragment(
-                            getResources().getString(R.string.need_network_for_update)));
-                } else {
-                    mWeatherToday = weathers.get(0);
-                    fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
-                }
-                fragmentTransaction.commit();
-                MainActivity.this.runOnUiThread(() -> mProgressBar.setVisibility(View.GONE));
+            if (weathers.size() == 0) {
+                fragmentTransaction.add(R.id.layout_main, new ErrorFragment(
+                        getResources().getString(R.string.need_network_for_update)));
+            } else {
+                mWeatherToday = weathers.get(0);
+                fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
+            }
+            fragmentTransaction.commit();
+            MainActivity.this.runOnUiThread(() -> mProgressBar.setVisibility(View.GONE));
         });
     }
 }

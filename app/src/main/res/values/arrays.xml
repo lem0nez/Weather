@@ -17,6 +17,18 @@
   -->
 
 <resources>
+    <string-array name="update_interval_entries">
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+    </string-array>
+    <string-array name="update_interval_entry_values">
+        <item>3600</item>
+        <item>10800</item>
+        <item>21600</item>
+        <item>43200</item>
+    </string-array>
     <string-array name="weather_conditions">
         <item>200|Thunderstorm with light rain</item>
         <item>201|Thunderstorm with rain</item>

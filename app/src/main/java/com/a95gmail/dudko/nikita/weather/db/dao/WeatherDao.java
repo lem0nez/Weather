@@ -49,7 +49,7 @@ public interface WeatherDao {
     int deleteAll(List<Weather> weathers);
 
     @Query("DELETE FROM weather")
-    int clear();
+    void clear();
 
     @Query("SELECT * FROM weather")
     List<Weather> getAll();

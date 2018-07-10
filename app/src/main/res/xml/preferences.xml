@@ -25,4 +25,10 @@
         android:key="locate"
         android:title="@string/locate"
         android:summary="@string/summary_locate" />
+    <ListPreference
+        android:key="update_interval"
+        android:title="@string/update_interval_title"
+        android:defaultValue="10800"
+        android:entries="@array/update_interval_entries"
+        android:entryValues="@array/update_interval_entry_values" />
 </PreferenceScreen>

@@ -28,8 +28,7 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="temperature_text_size">32sp</dimen>
     <dimen name="compass_text_size">6sp</dimen>
-    <dimen name="compass_margin_top">4dp</dimen>
-    <dimen name="compass_margin_bottom">2dp</dimen>
+    <dimen name="compass_margin">2dp</dimen>
     <dimen name="wind_speed_text_size">18sp</dimen>
     <dimen name="pressure_humidity_text_size">24sp</dimen>
     <dimen name="pressure_humidity_title_text_size">12sp</dimen>

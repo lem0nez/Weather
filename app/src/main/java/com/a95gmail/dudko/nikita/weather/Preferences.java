@@ -20,5 +20,8 @@ package com.a95gmail.dudko.nikita.weather;
 final class Preferences {
     public static final String PREF_CITY_ID = "city_id";
     public static final String PREF_LOCATE = "locate";
+    public static final String PREF_UPDATE_INTERVAL = "update_interval";
+    public static final String PREF_LAST_UPDATE = "last_update";
     public static final int DEFAULT_PREF_CITY_ID = -1;
+    public static final String DEFAULT_PREF_UPDATE_INTERVAL = "10800";
 }

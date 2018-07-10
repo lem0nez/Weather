@@ -57,4 +57,5 @@
     <string name="unit_celsius">°C</string>
     <string name="unit_meters_per_second">m/s</string>
     <string name="need_network_for_update">Need network connection for update weather data</string>
+    <string name="update_interval_title">Update interval</string>
 </resources>
