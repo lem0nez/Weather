@@ -82,7 +82,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        // If user didn't click on "Locate" button.
+        // If user clicked on the "Locate" button.
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(locationListener);
         }
@@ -113,7 +113,7 @@ public class StartActivity extends AppCompatActivity {
         @Override
         public void onLocationChanged(Location location) {
             FragmentManager fragmentManager = getFragmentManager();
-            // Only dismiss, because for callback onDismiss() set listener for remove updates.
+            // Only dismiss, because for the callback onDismiss() set the listener for remove updates.
             mLocateDialog.dismiss();
 
             LoadingDialog loadingDialog = new LoadingDialog(getString(R.string.loading));

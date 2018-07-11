@@ -25,7 +25,7 @@ import com.a95gmail.dudko.nikita.weather.db.entitie.Weather;
 
 @Database(entities = Weather.class, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public static final String DB_NAME = "database";
+    public static final String DB_NAME = "app_database";
 
     public abstract WeatherDao getWeatherDao();
 }

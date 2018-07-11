@@ -28,6 +28,9 @@ class Util {
         this.mContext = context;
     }
 
+    /*
+     * Sumulate the map structure using a resource arrays.
+     */
     @Nullable
     public String getResValueByKey(@ArrayRes int resId, String key) {
         String[] array = mContext.getResources().getStringArray(resId);

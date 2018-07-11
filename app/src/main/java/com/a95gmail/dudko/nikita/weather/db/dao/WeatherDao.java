@@ -55,8 +55,8 @@ public interface WeatherDao {
     List<Weather> getAll();
 
     @Query("SELECT * FROM weather WHERE timestamp = :timestamp LIMIT 1")
-    Weather getByTimestamp(long timestamp);
+    Weather getWeatherByTimestamp(long timestamp);
 
     @Query("SELECT * FROM weather WHERE timestamp BETWEEN :lowValue AND :highValue")
-    List<Weather> getThatValueBetween(long lowValue, long highValue);
+    List<Weather> getWeathersBetweenTimeValues(long lowValue, long highValue);
 }

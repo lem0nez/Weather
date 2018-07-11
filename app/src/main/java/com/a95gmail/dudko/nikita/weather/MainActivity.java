@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
     private WeatherDao mWeatherDao;
+    // For fast restoring information in today forecast screen.
     private Weather mWeatherToday;
 
     @Override
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        // For adding previous fragment on current screen (for example, when screen rotate).
         if (savedInstanceState != null) {
             addFragmentToLayout(savedInstanceState.getInt(KEY_SELECTED_ITEM_ID));
         } else {
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWeatherToday() {
+        // If before this moment the today weather screen showed forecast...
         if (mWeatherToday != null) {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.layout_main, new TodayFragment(mWeatherToday));
@@ -156,11 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
 
-        try {
-            networkInfo = connectivityManager.getActiveNetworkInfo();
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        networkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
         final boolean isConnected = networkInfo != null && networkInfo.isConnected();
 
         if (isConnected) {

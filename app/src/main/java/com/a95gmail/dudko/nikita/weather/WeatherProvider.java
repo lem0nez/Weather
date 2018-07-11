@@ -49,13 +49,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherProvider {
     private static final float HPA_IN_MMHG = 1.33322387415f;
-    /** @noinspection SpellCheckingInspection*/
-    private static final String API_KEY = "0ec658aba227f6b090eb728831aceece";
     public static final int INVALID_CITY_ID = -1;
-    /** @noinspection WeakerAccess*/
     @DrawableRes
     public static final int INVALID_RESOURCE_ID = 0;
 
+    private static final String API_KEY = "0ec658aba227f6b090eb728831aceece";
     private static final String KEY_LOW_TIMESTAMP = "LOW_TIMESTAMP";
     private static final String KEY_HIGH_TIMESTAMP = "HIGH_TIMESTAMP";
 
@@ -217,7 +215,7 @@ public class WeatherProvider {
         Bundle bundle = getLowAndHighTimestampMillis(timestampMillis);
 
         new Thread(() -> {
-            List<Weather> weathers = mWeatherDao.getThatValueBetween(
+            List<Weather> weathers = mWeatherDao.getWeathersBetweenTimeValues(
                     bundle.getLong(KEY_LOW_TIMESTAMP), bundle.getLong(KEY_HIGH_TIMESTAMP));
 
             if (weathers.size() == 0) {
@@ -229,6 +227,9 @@ public class WeatherProvider {
         }).start();
     }
 
+    /*
+     * For getting the weather data on a one day.
+     */
     private static Bundle getLowAndHighTimestampMillis(long timestampMillis) {
         final Date date = new Date(timestampMillis);
         final String lowDate = (String) DateFormat.format("dd.MM.yyyy 00:00:00", date);

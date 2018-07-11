@@ -68,8 +68,8 @@ public class EnterCityDialog extends DialogFragment {
         builder.setTitle(R.string.location);
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            // Do nothing, because we override this button in onResume()
-            // (for prevent closing dialog on click).
+            // Do nothing, because we override this button in the onResume() callback
+            // (for prevent closing the dialog on click).
         });
 
         builder.setView(layout);
@@ -84,6 +84,7 @@ public class EnterCityDialog extends DialogFragment {
         if (dialog != null) {
             Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
             editText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+                // Fast clicking on the done button using the keyboard "Enter" button.
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     positiveButton.performClick();
                 }
@@ -100,11 +101,8 @@ public class EnterCityDialog extends DialogFragment {
                         getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo netInfo = null;
 
-                try {
-                    netInfo = connectivityManager.getActiveNetworkInfo();
-                } catch (NullPointerException e) {
-                    Log.e(MainActivity.LOG_TAG, e.getMessage());
-                }
+                netInfo = connectivityManager != null
+                        ? connectivityManager.getActiveNetworkInfo() : null;
                 boolean isConnected = netInfo != null && netInfo.isConnectedOrConnecting();
 
                 if (!isConnected) {

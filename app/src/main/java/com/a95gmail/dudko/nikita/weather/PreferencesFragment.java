@@ -31,6 +31,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.a95gmail.dudko.nikita.weather.dialog.EnterCityDialog;
@@ -64,6 +65,7 @@ public class PreferencesFragment extends PreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
+        // If user clicked on the "Locate" preferences item.
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(locationListener);
         }
@@ -107,9 +109,13 @@ public class PreferencesFragment extends PreferenceFragment {
 
                     mLocationManager = (LocationManager)
                             getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    //noinspection ConstantConditions
-                    mLocationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, 5000, 2000, locationListener);
+
+                    try {
+                        mLocationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER, 5000, 2000, locationListener);
+                    } catch (NullPointerException e) {
+                        Log.e(MainActivity.LOG_TAG, e.getMessage());
+                    }
 
                     mLoadingDialog = new LoadingDialog(getActivity().getString(R.string.loading_locate));
                     mLoadingDialog.show(getFragmentManager(), TAG_DIALOG_LOADING);
