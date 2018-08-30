@@ -26,4 +26,5 @@
     <color name="color_red">#F44336</color>
     <color name="color_title_pressure_humidity">#424242</color>
     <color name="color_max_min_temp_title">#424242</color>
+    <color name="color_forecast_list_info_text">#636363</color>
 </resources>

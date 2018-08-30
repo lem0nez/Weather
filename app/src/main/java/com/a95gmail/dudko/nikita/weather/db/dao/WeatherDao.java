@@ -28,8 +28,10 @@ import com.a95gmail.dudko.nikita.weather.db.entitie.Weather;
 
 import java.util.List;
 
+/** @noinspection unused, unused, unused, unused, unused, unused */
 @Dao
 public interface WeatherDao {
+    /** @noinspection UnusedReturnValue*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Weather weather);
 

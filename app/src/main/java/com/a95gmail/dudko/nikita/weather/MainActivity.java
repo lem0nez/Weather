@@ -21,14 +21,11 @@ import android.app.FragmentTransaction;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -46,7 +43,6 @@ import static com.a95gmail.dudko.nikita.weather.Preferences.PREF_CITY_ID;
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "Weather";
     private static final String KEY_SELECTED_ITEM_ID = "SELECTED_ITEM_ID";
-    private static final long MILLIS_IN_DAY = 3600 * 24 * 1000;
 
     private Toolbar mToolbar;
     private ProgressBar mProgressBar;
@@ -55,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
     private WeatherDao mWeatherDao;
-    // For fast restoring information in today forecast screen.
+
+    // For fast restoring data.
     private Weather mWeatherToday;
+    private Weather[] mWeatherArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
         if (mPreferences.getInt(PREF_CITY_ID, DEFAULT_PREF_CITY_ID) == DEFAULT_PREF_CITY_ID) {
             startActivity(new Intent(this, StartActivity.class));
             finish();
+            return;
         }
 
-        // For adding previous fragment on current screen (for example, when screen rotate).
+        // For adding previous fragment on a current screen (for example, when the screen rotate).
         if (savedInstanceState != null) {
             addFragmentToLayout(savedInstanceState.getInt(KEY_SELECTED_ITEM_ID));
         } else {
@@ -110,13 +109,16 @@ public class MainActivity extends AppCompatActivity {
         mMainLayout.removeAllViews();
 
         switch (itemId) {
+            case R.id.menu_today :
+                initWeatherToday();
+                break;
+            case R.id.menu_five_days:
+                displayForecast();
+                break;
             case R.id.menu_settings :
                 mProgressBar.setVisibility(View.GONE);
                 fragmentTransaction.add(R.id.layout_main, new PreferencesFragment());
                 fragmentTransaction.commit();
-                break;
-            case R.id.menu_today :
-                initWeatherToday();
                 break;
             default :
                 break;
@@ -155,46 +157,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadAndDisplayWeatherToday() {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
+        Util util = new Util(this);
 
-        networkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
-        final boolean isConnected = networkInfo != null && networkInfo.isConnected();
-
-        if (isConnected) {
+        if (util.isConnected()) {
             WeatherProvider weatherProvider = new WeatherProvider(this);
             int cityId =
                     mPreferences.getInt(Preferences.PREF_CITY_ID, Preferences.DEFAULT_PREF_CITY_ID);
 
-            weatherProvider.requestWeatherToday(cityId, (Weather weather, int responseStatusCode) -> {
-                if (responseStatusCode != HttpURLConnection.HTTP_OK) {
-                    displayWeatherUsingDatabaseData();
-                    return;
+            weatherProvider.requestWeatherToday(cityId,
+                    new WeatherProvider.OnResponseWeatherListener() {
+                @Override
+                public void onResponseWeatherToday(Weather weather, int responseStatusCode) {
+                    if (responseStatusCode != HttpURLConnection.HTTP_OK) {
+                        displayWeatherUsingDatabaseData();
+                        return;
+                    }
+
+                    SharedPreferences.Editor prefEditor = mPreferences.edit();
+                    prefEditor.putLong(Preferences.PREF_LAST_UPDATE, System.currentTimeMillis() / 1000);
+                    prefEditor.commit();
+
+                    mWeatherToday = weather;
+                    fragmentTransaction.add(R.id.layout_main, new TodayFragment(weather));
+                    fragmentTransaction.commit();
+                    mProgressBar.setVisibility(View.GONE);
+
+                    new Thread(() -> {
+                        mWeatherDao.clear();
+                        mWeatherDao.insert(weather);
+                    }).start();
                 }
 
-                SharedPreferences.Editor prefEditor = mPreferences.edit();
-                prefEditor.putLong(Preferences.PREF_LAST_UPDATE, System.currentTimeMillis() / 1000);
-                prefEditor.commit();
-
-                mWeatherToday = weather;
-                fragmentTransaction.add(R.id.layout_main, new TodayFragment(weather));
-                fragmentTransaction.commit();
-                mProgressBar.setVisibility(View.GONE);
-
-                weatherProvider.requestRelevantWeathersOnDay(
-                        System.currentTimeMillis() + MILLIS_IN_DAY, 1, (weathers) -> {
-                            // If not contains forecast on next day in database,
-                            // then clear all table (for removing old forecasts).
-                            if (weathers.size() == 0) {
-                                new Thread(() -> {
-                                    mWeatherDao.clear();
-                                    mWeatherDao.insert(weather);
-                                }).start();
-                            } else {
-                                new Thread(() -> mWeatherDao.insert(weather)).start();
-                            }
-                        });
+                @Override
+                public void onResponseWeatherList(List<Weather> weathers, int responseStatusCode) {}
             });
         } else {
             displayWeatherUsingDatabaseData();
@@ -223,6 +218,70 @@ public class MainActivity extends AppCompatActivity {
             }
             fragmentTransaction.commit();
             MainActivity.this.runOnUiThread(() -> mProgressBar.setVisibility(View.GONE));
+        });
+    }
+
+    private void displayForecast() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        if (mWeatherArray != null) {
+            fragmentTransaction.add(R.id.layout_main, new ForecastListFragment(mWeatherArray));
+            fragmentTransaction.commit();
+            return;
+        }
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        WeatherProvider weatherProvider = new WeatherProvider(this);
+        weatherProvider.isNeedToUpdateForecast(needToUpdate -> {
+            if (needToUpdate) {
+                Util util = new Util(MainActivity.this);
+
+                if (!util.isConnected()) {
+                    runOnUiThread(() -> mProgressBar.setVisibility(View.GONE));
+
+                    fragmentTransaction.add(R.id.layout_main, new ErrorFragment(
+                            getResources().getString(R.string.need_network_for_update)));
+                    fragmentTransaction.commit();
+                    return;
+                }
+
+                int cityId = mPreferences.getInt(Preferences.PREF_CITY_ID,
+                        Preferences.DEFAULT_PREF_CITY_ID);
+
+                weatherProvider.requestWeatherList(cityId,
+                        new WeatherProvider.OnResponseWeatherListener() {
+                    @Override
+                    public void onResponseWeatherToday(Weather weather, int responseStatusCode) {}
+
+                    @Override
+                    public void onResponseWeatherList(List<Weather> weathers, int responseStatusCode) {
+                        runOnUiThread(() -> mProgressBar.setVisibility(View.GONE));
+
+                        if (responseStatusCode != HttpURLConnection.HTTP_OK) {
+                            String error = getResources().getString(R.string.error_response_code)
+                                    + responseStatusCode;
+                            fragmentTransaction.add(R.id.layout_main, new ErrorFragment(error));
+                            fragmentTransaction.commit();
+                            return;
+                        }
+
+                        mWeatherArray = weatherProvider.getWeatherArrayForForecastList(weathers);
+                        fragmentTransaction.add(R.id.layout_main,
+                                new ForecastListFragment(mWeatherArray));
+                        fragmentTransaction.commit();
+                    }
+                });
+            } else {
+                new Thread(() -> {
+                    List<Weather> weathers = mWeatherDao.getAll();
+                    mWeatherArray = weatherProvider.getWeatherArrayForForecastList(weathers);
+
+                    fragmentTransaction.add(R.id.layout_main,
+                            new ForecastListFragment(mWeatherArray));
+                    fragmentTransaction.commit();
+                }).start();
+            }
         });
     }
 }

@@ -38,11 +38,14 @@
     <dimen name="max_min_temp_text_size">20sp</dimen>
     <dimen name="sunrise_sunset_text_size">24sp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
-    <dimen name="weather_today_padding">8dp</dimen>
+    <dimen name="layout_padding_for_card_views">8dp</dimen>
 
     <!-- Increase max width of bottom navigation for tablets and landscape mode. -->
     <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
     <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 
     <dimen name="error_text_size">18sp</dimen>
+    <dimen name="forecast_list_info_text_size">12sp</dimen>
+    <dimen name="forecast_list_text_info_margin">12dp</dimen>
+    <dimen name="forecast_list_text_weather">20sp</dimen>
 </resources>

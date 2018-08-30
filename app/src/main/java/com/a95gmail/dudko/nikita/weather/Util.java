@@ -18,19 +18,21 @@
 package com.a95gmail.dudko.nikita.weather;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.Nullable;
 
-class Util {
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
+public class Util {
     private final Context mContext;
 
     public Util(Context context) {
         this.mContext = context;
     }
 
-    /*
-     * Sumulate the map structure using a resource arrays.
-     */
+    // Simulate the map structure using a resource arrays.
     @Nullable
     public String getResValueByKey(@ArrayRes int resId, String key) {
         String[] array = mContext.getResources().getStringArray(resId);
@@ -44,5 +46,14 @@ class Util {
             }
         }
         return value;
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) mContext.getSystemService(CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo =
+                connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

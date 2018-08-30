@@ -29,6 +29,7 @@ public class ErrorDialog extends DialogFragment {
     private final String text;
     private final DialogInterface.OnClickListener clickListener;
 
+    /** @noinspection unused*/
     public ErrorDialog(String text, DialogInterface.OnClickListener clickListener) {
         this.text = text;
         this.clickListener = clickListener;

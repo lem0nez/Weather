@@ -25,10 +25,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/weather_today_padding"
-        android:paddingLeft="@dimen/weather_today_padding"
-        android:paddingRight="@dimen/weather_today_padding"
-        android:paddingTop="@dimen/weather_today_padding">
+        android:paddingBottom="@dimen/layout_padding_for_card_views"
+        android:paddingLeft="@dimen/layout_padding_for_card_views"
+        android:paddingRight="@dimen/layout_padding_for_card_views"
+        android:paddingTop="@dimen/layout_padding_for_card_views">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view_weather_title"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/image_view_weather_icon"
+                    android:id="@+id/image_view_forecast_weather_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_margin"
@@ -86,7 +86,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:textSize="@dimen/temperature_text_size"
                     app:layout_constraintBottom_toTopOf="@id/text_view_weather_info"
-                    app:layout_constraintLeft_toRightOf="@id/image_view_weather_icon"
+                    app:layout_constraintLeft_toRightOf="@id/image_view_forecast_weather_icon"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +98,7 @@
                     android:maxLines="2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/image_view_weather_icon" />
+                    app:layout_constraintTop_toBottomOf="@id/image_view_forecast_weather_icon" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
@@ -121,7 +121,7 @@
                 android:layout_height="match_parent">
 
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/constraint_compass"
+                    android:id="@+id/constraint_forecast_compass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -131,103 +131,103 @@
                       -->
 
                     <View
-                        android:id="@+id/view_helper_compass_n"
+                        android:id="@+id/view_helper_forecast_compass_n"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@id/image_view_compass"
+                        app:layout_constraintBottom_toTopOf="@id/image_view_forecast_compass"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/text_view_compass_n"
+                        android:id="@+id/text_view_forecast_compass_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/compass_n"
                         android:textSize="@dimen/compass_text_size"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/view_helper_compass_n" />
+                        app:layout_constraintTop_toTopOf="@id/view_helper_forecast_compass_n" />
 
                     <View
-                        android:id="@+id/view_helper_compass_s"
+                        android:id="@+id/view_helper_forecast_compass_s"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/image_view_compass" />
+                        app:layout_constraintTop_toBottomOf="@id/image_view_forecast_compass" />
 
                     <TextView
-                        android:id="@+id/text_view_compass_s"
+                        android:id="@+id/text_view_forecast_compass_s"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/compass_s"
                         android:textSize="@dimen/compass_text_size"
-                        app:layout_constraintBottom_toBottomOf="@id/view_helper_compass_s"
+                        app:layout_constraintBottom_toBottomOf="@id/view_helper_forecast_compass_s"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
 
                     <View
-                        android:id="@+id/view_helper_compass_e"
+                        android:id="@+id/view_helper_forecast_compass_e"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/image_view_compass"
+                        app:layout_constraintLeft_toRightOf="@id/image_view_forecast_compass"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/text_view_compass_e"
+                        android:id="@+id/text_view_forecast_compass_e"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/compass_e"
                         android:textSize="@dimen/compass_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/view_helper_compass_e"
+                        app:layout_constraintRight_toLeftOf="@id/view_helper_forecast_compass_e"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_helper_compass_w"
+                        android:id="@+id/view_helper_forecast_compass_w"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/image_view_compass"
+                        app:layout_constraintRight_toLeftOf="@id/image_view_forecast_compass"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/text_view_compass_w"
+                        android:id="@+id/text_view_forecast_compass_w"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/compass_w"
                         android:textSize="@dimen/compass_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/view_helper_compass_w"
+                        app:layout_constraintLeft_toRightOf="@id/view_helper_forecast_compass_w"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/image_view_compass"
+                        android:id="@+id/image_view_forecast_compass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/compass_margin"
                         android:layout_marginTop="@dimen/compass_margin"
                         android:src="@drawable/ic_wind_degree"
-                        app:layout_constraintBottom_toTopOf="@id/view_helper_compass_s"
-                        app:layout_constraintLeft_toRightOf="@id/view_helper_compass_w"
-                        app:layout_constraintRight_toLeftOf="@id/view_helper_compass_e"
-                        app:layout_constraintTop_toBottomOf="@id/view_helper_compass_n" />
+                        app:layout_constraintBottom_toTopOf="@id/view_helper_forecast_compass_s"
+                        app:layout_constraintLeft_toRightOf="@id/view_helper_forecast_compass_w"
+                        app:layout_constraintRight_toLeftOf="@id/view_helper_forecast_compass_e"
+                        app:layout_constraintTop_toBottomOf="@id/view_helper_forecast_compass_n" />
                 </android.support.constraint.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/text_view_wind_speed"
+                    android:id="@+id/text_view_forecast_wind_speed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/wind_speed_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/constraint_compass" />
+                    app:layout_constraintTop_toBottomOf="@id/constraint_forecast_compass" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 

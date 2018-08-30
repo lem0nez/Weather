@@ -20,12 +20,8 @@ package com.a95gmail.dudko.nikita.weather.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +31,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.a95gmail.dudko.nikita.weather.MainActivity;
 import com.a95gmail.dudko.nikita.weather.R;
+import com.a95gmail.dudko.nikita.weather.Util;
 import com.a95gmail.dudko.nikita.weather.WeatherProvider;
 
 import java.net.HttpURLConnection;
@@ -93,19 +89,12 @@ public class EnterCityDialog extends DialogFragment {
 
             positiveButton.setOnClickListener((view) -> {
                 String city = editText.getText().toString();
+                Util util = new Util(getActivity());
 
                 editText.requestFocus();
                 summary.setVisibility(View.VISIBLE);
 
-                ConnectivityManager connectivityManager = (ConnectivityManager)
-                        getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = null;
-
-                netInfo = connectivityManager != null
-                        ? connectivityManager.getActiveNetworkInfo() : null;
-                boolean isConnected = netInfo != null && netInfo.isConnectedOrConnecting();
-
-                if (!isConnected) {
+                if (!util.isConnected()) {
                     summary.setTextColor(getActivity().getColor(R.color.color_red));
                     summary.setText(R.string.need_network_access);
                     return;

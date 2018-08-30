@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2018 Nikita Dudko. All rights reserved.
+  ~ Contacts: <nikita.dudko.95@gmail.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/layout_padding"
+        android:paddingBottom="@dimen/layout_padding"
+        android:paddingRight="@dimen/layout_padding"
+        android:paddingLeft="@dimen/layout_padding">
+
+        <TextView
+            android:id="@+id/text_view_forecast_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="@dimen/forecast_list_text_info_margin"
+            android:textSize="@dimen/forecast_list_info_text_size"
+            android:textColor="@color/color_forecast_list_info_text" />
+
+        <TextView
+            android:id="@+id/text_view_forecast_wind_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/forecast_list_info_text_size"
+            android:textColor="@color/color_forecast_list_info_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/text_view_forecast_day"
+            android:layout_marginLeft="@dimen/forecast_list_text_info_margin"
+            android:layout_marginRight="@dimen/forecast_list_text_info_margin" />
+
+        <TextView
+            android:id="@+id/text_view_forecat_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/text_view_forecast_wind_speed"
+            android:layout_marginLeft="@dimen/forecast_list_text_info_margin"
+            android:textSize="@dimen/forecast_list_info_text_size"
+            android:textColor="@color/color_forecast_list_info_text" />
+
+        <TextView
+            android:id="@+id/text_view_forecast_weather_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_view_forecast_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="@dimen/forecast_list_text_weather" />
+
+        <ImageView
+            android:id="@+id/image_view_forecast_weather_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

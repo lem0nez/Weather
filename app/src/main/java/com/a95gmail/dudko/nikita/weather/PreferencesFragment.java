@@ -31,11 +31,12 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.a95gmail.dudko.nikita.weather.dialog.EnterCityDialog;
 import com.a95gmail.dudko.nikita.weather.dialog.LoadingDialog;
+
+import java.util.Objects;
 
 public class PreferencesFragment extends PreferenceFragment {
     private static final String TAG_DIALOG_ENTER_CITY = "DIALOG_ENTER_CITY";
@@ -110,12 +111,8 @@ public class PreferencesFragment extends PreferenceFragment {
                     mLocationManager = (LocationManager)
                             getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-                    try {
-                        mLocationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER, 5000, 2000, locationListener);
-                    } catch (NullPointerException e) {
-                        Log.e(MainActivity.LOG_TAG, e.getMessage());
-                    }
+                    Objects.requireNonNull(mLocationManager).requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER, 5000, 2000, locationListener);
 
                     mLoadingDialog = new LoadingDialog(getActivity().getString(R.string.loading_locate));
                     mLoadingDialog.show(getFragmentManager(), TAG_DIALOG_LOADING);

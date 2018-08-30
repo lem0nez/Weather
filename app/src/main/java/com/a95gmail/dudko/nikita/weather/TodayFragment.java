@@ -72,12 +72,12 @@ public class TodayFragment extends Fragment {
         String temperatureSymbol;
 
         mTextTitle = activity.findViewById(R.id.text_view_weather_title);
-        mImageWeatherIcon = activity.findViewById(R.id.image_view_weather_icon);
+        mImageWeatherIcon = activity.findViewById(R.id.image_view_forecast_weather_icon);
         mTextTemperature = activity.findViewById(R.id.text_view_temperature);
         mTextWeatherInfo = activity.findViewById(R.id.text_view_weather_info);
 
-        mImageCompass = activity.findViewById(R.id.image_view_compass);
-        mTextWindSpeed = activity.findViewById(R.id.text_view_wind_speed);
+        mImageCompass = activity.findViewById(R.id.image_view_forecast_compass);
+        mTextWindSpeed = activity.findViewById(R.id.text_view_forecast_wind_speed);
 
         mTextHumidity = activity.findViewById(R.id.text_view_humidity);
         mTextPressure = activity.findViewById(R.id.text_view_pressure);
